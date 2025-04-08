@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1743843843 source:c:\users\fablab\desktop\rubrica\main.cpp
+	<iostream>
+	<string>
+	<fstream>
+
+1744108403 source:c:\users\amministratore\downloads\3ib\rubrica\main (8).cpp
+	<iostream>
+	<string>
+	<fstream>
+

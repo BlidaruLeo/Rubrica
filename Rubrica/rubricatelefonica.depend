@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1743244689 source:c:\users\fablab\desktop\es void\rubricatelefonica\main.cpp
+	<iostream>
+	<string>
+	<fstream>
+
