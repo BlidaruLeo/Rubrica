@@ -22,6 +22,8 @@ struct dati_anagrafici {
 
 void inserisciContatto(dati_anagrafici contatto[], int& numero_contatti);
 void modificaContatto(dati_anagrafici contatto[], int numero_contatti);
+void ricercaPerCognome(dati_anagrafici contatto[], int numero_contatti);
+void ricercaPerNumero(dati_anagrafici contatto[], int numero_contatti);
 
 int main() {
     int scelta;
@@ -52,16 +54,20 @@ int main() {
         case 2:
             modificaContatto(contatto, numero_contatti);
             break;
-
-    };
+        case 3:
+            ricercaPerCognome(contatto, numero_contatti);
+            break;
+        case 4:
+            ricercaPerNumero(contatto, numero_contatti);
+            break;
+    }
 
     return 0;
 }
 
 void inserisciContatto(dati_anagrafici contatto[], int& numero_contatti) {
     char scelta2;
-
-            rubrica.open("rubrica.txt");
+    rubrica.open("rubrica.txt");
 
     for (int i = numero_contatti; i < 150; i++) {
         cout << "Inserisci il nome" << endl;
@@ -79,7 +85,6 @@ void inserisciContatto(dati_anagrafici contatto[], int& numero_contatti) {
         cin >> scelta2;
         fflush(stdin);
 
-
         rubrica << contatto[i].nome << endl;
         rubrica << contatto[i].cognome << endl;
         rubrica << contatto[i].data.giorno << endl;
@@ -89,13 +94,11 @@ void inserisciContatto(dati_anagrafici contatto[], int& numero_contatti) {
         rubrica << contatto[i].numero_telefonico << endl;
         rubrica << endl;
 
-
-        if (scelta2 == 'n') {
-            break;
-        }
         numero_contatti++;
+        if (scelta2 == 'n') break;
     }
-            rubrica.close();
+
+    rubrica.close();
 }
 
 void modificaContatto(dati_anagrafici contatto[], int numero_contatti) {
@@ -112,17 +115,13 @@ void modificaContatto(dati_anagrafici contatto[], int numero_contatti) {
 
             cout << "Nuovo cognome: ";
             getline(cin, contatto[i].cognome);
-
             cout << "Nuovo nome: ";
             getline(cin, contatto[i].nome);
-
             cout << "Nuovo numero telefonico: ";
             cin >> contatto[i].numero_telefonico;
-
             cout << "Inserisci la nuova data di nascita (gg mm aaaa): ";
             cin >> contatto[i].data.giorno >> contatto[i].data.mese >> contatto[i].data.anno;
             fflush(stdin);
-
             cout << "Nuovo indirizzo: ";
             getline(cin, contatto[i].indirizzo);
 
@@ -136,7 +135,7 @@ void modificaContatto(dati_anagrafici contatto[], int numero_contatti) {
         return;
     }
 
-        rubrica.open("rubrica.txt");
+    rubrica.open("rubrica.txt");
     for (int i = 0; i < numero_contatti; i++) {
         rubrica << contatto[i].nome << endl;
         rubrica << contatto[i].cognome << endl;
@@ -147,25 +146,56 @@ void modificaContatto(dati_anagrafici contatto[], int numero_contatti) {
         rubrica << contatto[i].numero_telefonico << endl;
         rubrica << endl;
     }
-            rubrica.close();
-      }
-
+    rubrica.close();
+}
 
 void ricercaPerCognome(dati_anagrafici contatto[], int numero_contatti) {
     string cognome_cercato;
     bool trovato = false;
 
-    cout<< "inserire il Cognome da ricercare " << endl;
+    cout << "Inserisci il cognome da cercare: ";
+    fflush(stdin);
     getline(cin, cognome_cercato);
 
-    for(int i = 0; i < numero_contatti; i++) {
-        if (cognome_cercato == contatto[i].cognome) {
-            cout << " Contatto trovato " << endl;
-            cout << " Nome " << contatto[i].nome << endl;
-            cout << " Cognome " << contatto[i].cognome << endl;
-            cout << " Data di nascita " << contatto[i].data.giorno << contatto[i].data.mese << contatto[i].data.anno << endl;
-            cout << " Indirizzo " << contatto[i].indirizzo << endl;
-            cout << " Numero telefonico " << contatto[i].numero_telefonico << endl;
+    for (int i = 0; i < numero_contatti; i++) {
+        if (contatto[i].cognome == cognome_cercato) {
+            trovato = true;
+            cout << "\nContatto trovato:\n";
+            cout << "Nome: " << contatto[i].nome << endl;
+            cout << "Cognome: " << contatto[i].cognome << endl;
+            cout << "Data di nascita: " << contatto[i].data.giorno << "/"
+                 << contatto[i].data.mese << "/" << contatto[i].data.anno << endl;
+            cout << "Indirizzo: " << contatto[i].indirizzo << endl;
+            cout << "Numero telefonico: " << contatto[i].numero_telefonico << endl;
         }
+    }
+
+    if (!trovato) {
+        cout << "Nessun contatto trovato con questo cognome.\n";
+    }
+}
+
+void ricercaPerNumero(dati_anagrafici contatto[], int numero_contatti) {
+    int numero_cercato;
+    bool trovato = false;
+
+    cout << "Inserisci il numero di telefono da cercare: ";
+    cin >> numero_cercato;
+
+    for (int i = 0; i < numero_contatti; i++) {
+        if (contatto[i].numero_telefonico == numero_cercato) {
+            trovato = true;
+            cout << "\nContatto trovato:\n";
+            cout << "Nome: " << contatto[i].nome << endl;
+            cout << "Cognome: " << contatto[i].cognome << endl;
+            cout << "Data di nascita: " << contatto[i].data.giorno << "/"
+                 << contatto[i].data.mese << "/" << contatto[i].data.anno << endl;
+            cout << "Indirizzo: " << contatto[i].indirizzo << endl;
+            cout << "Numero telefonico: " << contatto[i].numero_telefonico << endl;
+        }
+    }
+
+    if (!trovato) {
+        cout << "Nessun contatto trovato con questo numero.\n";
     }
 }
